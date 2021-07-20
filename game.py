@@ -53,17 +53,6 @@ class Game():
             return
 
         ball.update()
-               
-        # Border checking
-        # TODO: Calculate edges and positions by code - Dynamically.
-
-        if ball.y > 290:
-            ball.y = 290
-            self.collide_wall()
-
-        if ball.y < -290:
-            ball.y = -290
-            self.collide_wall()
 
         if ball.x > 390:
             self.scoreboard.score_a += 1
@@ -72,15 +61,6 @@ class Game():
         if ball.x < -390:
             self.scoreboard.score_b += 1
             self.score()
-
-        # Ball Collides with Paddle
-        if (ball.x > 330) and (ball.y < paddle_b.y + 50 and ball.y > paddle_b.y - 50):
-            ball.x = 330
-            self.collide_paddle()
-            
-        if (ball.x < -330) and (ball.y < paddle_a.y + 50 and ball.y > paddle_a.y - 50):
-            ball.x = -330
-            self.collide_paddle()
 
     def score(self):
         self.ball.reset()
@@ -108,10 +88,30 @@ class Game():
         #TODO: Clear Screen for Winner Announcement
         self.scoreboard.announce_winner()
 
-    # def button(x,y):
-    #     if x < 50 and x > -50 and y < 50 and y > -50:
-    #         print(f"Your coordinates are: ({x}, {y}).")
-    # turtle.onscreenclick(button, 1, add=False)
-    # turtle.done()
-        
+    def physics_update(self,delta):
 
+        # Border checking
+        # TODO: Calculate edges and positions by code - Dynamically.
+        ball = self.ball
+        paddle_a = self.paddle_a
+        paddle_b = self.paddle_b
+
+        if not self.timer:
+            ball.physics_update(delta)
+
+        if ball.y > 290:
+            ball.y = 290
+            self.collide_wall()
+
+        if ball.y < -290:
+            ball.y = -290
+            self.collide_wall()
+
+        # Ball Collides with Paddle
+        if (ball.x > 330 and ball.x < 350) and (ball.y < paddle_b.y + 50 and ball.y > paddle_b.y - 50):
+            ball.x = 330
+            self.collide_paddle()
+            
+        if (ball.x < -330 and ball.x > -350) and (ball.y < paddle_a.y + 50 and ball.y > paddle_a.y - 50):
+            ball.x = -330
+            self.collide_paddle()

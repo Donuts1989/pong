@@ -26,11 +26,6 @@ class Ball():
         self.trace = trace
 
     def update(self):
-        # Move the ball
-        if self.y >= self.ymax or self.y <= self.ymin:
-            self.dy *= -1
-        self.y += self.dy
-        self.x += self.dx
         self.trace.setx(self.x)
         self.trace.sety(self.y)
 
@@ -45,3 +40,9 @@ class Ball():
     def set_speed(self, speed):
         self.dy = sign(self.dy)*speed
         self.dx = sign(self.dx)*speed
+
+    def physics_update(self, delta):
+        if self.y >= self.ymax or self.y <= self.ymin:
+            self.dy *= -1
+        self.y += self.dy*delta
+        self.x += self.dx*delta

@@ -2,7 +2,7 @@ import turtle
 
 
 class Scoreboard():
-    win_condition = 3
+    win_condition = 1000
     player_1 = "Player A"
     player_2 = "Player B"
 
